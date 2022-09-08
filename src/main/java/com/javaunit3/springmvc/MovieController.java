@@ -1,5 +1,7 @@
-import model.MovieEntity;
-import model.VoteEntity;
+package com.javaunit3.springmvc;
+
+import com.javaunit3.springmvc.model.MovieEntity;
+import com.javaunit3.springmvc.model.VoteEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,8 @@ import java.util.Comparator;
 import java.util.List;
 
 @Controller
-public class MovieController {
+public class MovieController
+{
     @Autowired
     private BestMovieService bestMovieService;
 
@@ -21,12 +24,14 @@ public class MovieController {
     private SessionFactory sessionFactory;
 
     @RequestMapping("/")
-    public String getIndexPage() {
+    public String getIndexPage()
+    {
         return "index";
     }
 
     @RequestMapping("/bestMovie")
-    public String getBestMoviePage(Model model) {
+    public String getBestMoviePage(Model model)
+    {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
@@ -36,7 +41,8 @@ public class MovieController {
         MovieEntity movieWithMostVotes = movieEntityList.get(movieEntityList.size() - 1);
         List<String> voterNames = new ArrayList<>();
 
-        for (VoteEntity vote : movieWithMostVotes.getVotes()) {
+        for (VoteEntity vote: movieWithMostVotes.getVotes())
+        {
             voterNames.add(vote.getVoterName());
         }
 
@@ -51,7 +57,8 @@ public class MovieController {
     }
 
     @RequestMapping("/voteForBestMovieForm")
-    public String voteForBestMovieFormPage(Model model) {
+    public String voteForBestMovieFormPage(Model model)
+    {
         Session session = sessionFactory.getCurrentSession();
 
         session.beginTransaction();
@@ -66,7 +73,8 @@ public class MovieController {
     }
 
     @RequestMapping("/voteForBestMovie")
-    public String voteForBestMovie(HttpServletRequest request, Model model) {
+    public String voteForBestMovie(HttpServletRequest request, Model model)
+    {
         String movieId = request.getParameter("movieId");
         String voterName = request.getParameter("voterName");
 
@@ -87,12 +95,14 @@ public class MovieController {
     }
 
     @RequestMapping("/addMovieForm")
-    public String addMovieForm() {
+    public String addMovieForm()
+    {
         return "addMovie";
     }
 
     @RequestMapping("/addMovie")
-    public String addMovie(HttpServletRequest request) {
+    public String addMovie(HttpServletRequest request)
+    {
         String movieTitle = request.getParameter("movieTitle");
         String maturityRating = request.getParameter("maturityRating");
         String genre = request.getParameter("genre");
